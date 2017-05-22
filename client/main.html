@@ -1,0 +1,13 @@
+<head>
+  <title>textcircle</title>
+</head>
+
+<body>
+  <h1>Welcome to my collaborative document editor</h1>
+  {{> editor}}
+</body>
+
+<template name="editor">
+	<h2>doc id: {{docid}}</h2>
+  {{>sharejsCM docid=docid id="editor"}}
+</template>
