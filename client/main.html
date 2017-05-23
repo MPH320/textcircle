@@ -4,10 +4,15 @@
 
 <body>
   <h1>Welcome to my collaborative document editor</h1>
+	{{> date_display}}
   {{> editor}}
 </body>
 
 <template name="editor">
 	<h2>doc id: {{docid}}</h2>
   {{>sharejsCM docid=docid id="editor"}}
+</template>
+
+<template name="date_display">
+	{{current_date}}
 </template>
