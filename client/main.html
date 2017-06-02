@@ -43,6 +43,7 @@
 
 <template name="editingUsers">
 	{{#each users}}
-		{{userName}} edited this doc on {{lastEdit}} <br>
+		Editors:
+		<span class="label label-success">{{userName}}</span><br>
 	{{/each}}
 </template>

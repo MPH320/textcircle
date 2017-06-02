@@ -8,7 +8,9 @@ Template.editor.helpers({
 	},
 	config:function(){
 		return function(editor){
-			editor.on("change", function(cm_editor, info){
+				editor.setOption("lineNumbers", true);
+				editor.setOption("theme", "twilight");
+				editor.on("change", function(cm_editor, info){
 			
 				$("#viewer_iframe").contents().find("html").html(cm_editor.getValue());
 				Meteor.call("addEditingUser")
