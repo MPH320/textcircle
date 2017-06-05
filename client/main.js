@@ -39,3 +39,9 @@ Template.editingUsers.helpers({
 	}
 });
 
+Template.navbar.events({
+	"click .js-add-doc":function(event){
+		event.preventDefault();
+		console.log("add new doc");
+	}
+});
