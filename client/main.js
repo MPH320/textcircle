@@ -43,5 +43,11 @@ Template.navbar.events({
 	"click .js-add-doc":function(event){
 		event.preventDefault();
 		console.log("add new doc");
+		if (!Meteor.user()){
+			alert("You need to login first.")		
+		}
+		else{
+			Meteor.call("addDoc");
+		}
 	}
 });
