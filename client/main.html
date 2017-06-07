@@ -9,6 +9,12 @@
 		<br>
 		<div class="row">
 			<div class="col-md-12">
+				{{> docMeta}}
+			</div>
+		</div>
+		<br>
+		<div class="row">
+			<div class="col-md-12">
 				{{> editingUsers}}
 			</div>
 		</div>
@@ -37,6 +43,16 @@
 						</span> New document
 					</a>
 				</li>
+				
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Available docs <span class="caret"></span></a>
+					<ul class="dropdown-menu">
+						{{#each documents}}
+						<li><a href="#" class="js-load-doc">{{title}}</a></li>
+						{{/each}}
+					</ul>
+				</li>
+				
 			</ul>
 			<p class="navbar-text navbar-right">{{>loginButtons aligh="right"}}</p>
 		</div>
@@ -58,4 +74,10 @@
 		Editors:
 		<span class="label label-success">{{userName}}</span><br>
 	{{/each}}
+</template>
+
+<template name="docMeta">
+	{{#with document}}
+	<span class="h1">{{> editableText collection="documents" field="title"}}</span>
+	{{/with}}
 </template>

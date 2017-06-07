@@ -12,9 +12,8 @@ Template.editor.helpers({
 				editor.setOption("lineNumbers", true);
 				editor.setOption("theme", "twilight");
 				editor.on("change", function(cm_editor, info){
-			
-				$("#viewer_iframe").contents().find("html").html(cm_editor.getValue());
-				Meteor.call("addEditingUser")
+					$("#viewer_iframe").contents().find("html").html(cm_editor.getValue());
+					Meteor.call("addEditingUser", Session.get("docid"));
 			});
 		}
 	}
@@ -25,7 +24,7 @@ Template.editingUsers.helpers({
 		var doc, eusers, users;
 		doc = Documents.findOne();
 		if (!doc) {return;}
-		eusers = EditingUsers.findOne({docid:doc._id});
+		eusers = EditingUsers.findOne({docid:Session.get("docid")});
 		
 		if (!eusers) {return;}
 		users = new Array();
@@ -41,6 +40,9 @@ Template.editingUsers.helpers({
 });
 
 Template.navbar.events({
+	"click .js-load-doc":function(event){
+		Session.set("docid", this._id);
+	},
 	"click .js-add-doc":function(event){
 		event.preventDefault();
 		console.log("add new doc");
@@ -51,12 +53,35 @@ Template.navbar.events({
 			var id = Meteor.call("addDoc", function(err, res){
 				if (!err) {
 					console.log("Callback received, id: " + res);
-					Session.set("docid", res)
+					Session.set("docid", res);
 				}
 			});
 		}
 	}
 });
+
+Template.navbar.helpers({
+  documents:function(){
+		return Documents.find({});
+	}
+});
+
+Template.docMeta.helpers({
+  document:function(){
+		return Documents.findOne({_id:Session.get("docid")});
+	}
+});
+
+Template.editableText.helpers({
+	userCanEdit : function(doc, Collection){
+		doc = Documents.findOne({_id:Session.get("docid"), owner:Meteor.userId()});
+		if(doc){
+			return true;
+		} else {
+			return false;
+		}
+	}
+})
 
 
 var setupCurrentDocument = function() {
