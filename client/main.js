@@ -72,6 +72,13 @@ Template.docMeta.helpers({
 	}
 });
 
+Template.docMeta.events({
+	"click .js-tog-private":function(event){
+		var doc = {_id:Session.get("docid"), isPrivate:event.target.checked};
+		Meteor.call("updateDocPrivacy", doc);
+	}
+});
+
 Template.editableText.helpers({
 	userCanEdit : function(doc, Collection){
 		doc = Documents.findOne({_id:Session.get("docid"), owner:Meteor.userId()});
