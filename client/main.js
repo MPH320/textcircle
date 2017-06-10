@@ -1,3 +1,6 @@
+Meteor.subscribe("documents");
+Meteor.subscribe("editingUsers");
+
 Accounts.ui.config({
 		passwordSignupFields: "USERNAME_AND_EMAIL"
 	});
@@ -62,14 +65,35 @@ Template.navbar.events({
 
 Template.navbar.helpers({
   documents:function(){
-		return Documents.find({});
+		return Documents.find();
 	}
 });
 
 Template.docMeta.helpers({
   document:function(){
 		return Documents.findOne({_id:Session.get("docid")});
-	}
+	},
+	canEdit:function(){
+		var doc = Documents.findOne({_id:Session.get("docid")});
+
+		if (doc) {
+			if (doc.owner == Meteor.userId()) {
+					return true;
+			}
+		}
+		
+		return false;
+	},
+	isChecked: function() {
+		var doc = Documents.findOne({_id:Session.get("docid")});
+		console.log("ischecked")
+		if(doc.isPrivate){
+			return true
+			console.log("checked")
+		} 
+		console.log("unchecked")
+    return false; 
+  }
 });
 
 Template.docMeta.events({
