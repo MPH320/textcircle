@@ -1,6 +1,6 @@
 Meteor.startup(() => {
   if(!Documents.findOne()){
-			 Documents.insert({title:"Starter doc", isPrivate:false, owner: ""});
+			 Documents.insert({title:"Starter doc", isPrivate:false, owner: "", content: " "});
 		}
 });
 
